@@ -341,7 +341,7 @@ jobs:
           armsr_tarfile_path="openwrt/output"
           [[ -d "${armsr_tarfile_path}" ]] || mkdir -p ${armsr_tarfile_path}
           ln -sf /builder/openwrt ${{ github.workspace }}/openwrt
-          ln -sf /builder/openwrt /home/runner/work/_actions/ophub/amlogic-s9xxx-openwrt/main/openwrt
+          ln -sf /builder/openwrt /home/runner/work/_actions/slaier/amlogic-s9xxx-openwrt/main/openwrt
 
           latest_version=$(curl -s \
                 -H "Accept: application/vnd.github+json" \
@@ -373,7 +373,7 @@ jobs:
 
       - name: Packaging OpenWrt
         if: ${{ steps.down.outputs.status }} == 'success' && !cancelled()
-        uses: ophub/amlogic-s9xxx-openwrt@main
+        uses: slaier/amlogic-s9xxx-openwrt@main
         with:
           openwrt_path: openwrt/output/*rootfs.tar.gz
           openwrt_ip: ${{ inputs.openwrt_ip }}
@@ -397,7 +397,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           body: |
             ### OpenWrt Image information
-            - Default IP: 192.168.1.1
+            - Default IP: ${{ inputs.openwrt_ip }}
             - Default username: root
             - Default password: password
             - Default WIFI name: OpenWrt
